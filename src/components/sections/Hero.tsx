@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { ArrowRight, Download, Code } from "lucide-react";
+import { ArrowRight, Code } from "lucide-react";
 import { motion } from "framer-motion";
 import { portfolioData } from "@/config/portfolioData";
 import { playClickSound, playHoverSound } from "@/utils/audio";
@@ -136,15 +136,6 @@ export default function Hero() {
               <ArrowRight className="w-4 h-4" />
             </button>
 
-            <a
-              href="#resume-viewer"
-              onClick={() => playClickSound()}
-              onMouseEnter={playHoverSound}
-              className="px-6 py-3 rounded-lg border border-white/20 hover:border-cyber-pink bg-white/5 hover:bg-cyber-pink/15 text-white font-semibold text-sm font-mono-tech transition-all flex items-center gap-2 clickable"
-            >
-              <Download className="w-4 h-4" />
-              <span>Resume</span>
-            </a>
 
             <button
               onClick={() => handleActionClick("contact")}
