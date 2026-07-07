@@ -1,101 +1,76 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import LoadingScreen from "@/components/LoadingScreen";
+import Header from "@/components/Header";
+import Hero from "@/components/sections/Hero";
+import About from "@/components/sections/About";
+import Skills from "@/components/sections/Skills";
+import Projects from "@/components/sections/Projects";
+import Experience from "@/components/sections/Experience";
+import Achievements from "@/components/sections/Achievements";
+import Contact from "@/components/sections/Contact";
+import { Terminal } from "lucide-react";
+import { playClickSound } from "@/utils/audio";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [loaded, setLoaded] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const handleActionClick = (targetId: string) => {
+    playClickSound();
+    const el = document.getElementById(targetId);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
+  return (
+    <>
+      <LoadingScreen onComplete={() => setLoaded(true)} />
+
+      {loaded && (
+        <div className="relative min-h-screen flex flex-col justify-between overflow-x-hidden">
+          {/* Noise + Glow overlays */}
+          <div className="fixed inset-0 pointer-events-none z-[1] bg-cyber-grid opacity-5" />
+          <div className="fixed inset-0 pointer-events-none z-[2] cyber-noise" />
+
+          {/* Navigation Header */}
+          <Header />
+
+          {/* Main Sections */}
+          <main className="flex-1 w-full">
+            <Hero />
+            <About />
+            <Skills />
+            <Projects />
+            <Experience />
+            <Achievements />
+            <Contact />
+          </main>
+
+          {/* Footer */}
+          <footer className="py-10 border-t border-white/5 bg-cyber-dark/95 z-10 font-mono-tech text-[10px] sm:text-xs text-white/40 tracking-wider">
+            <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+              <div className="flex items-center gap-2">
+                <Terminal className="w-4 h-4 text-cyber-pink" />
+                <span>NODE_ESTABLISHED::0x{new Date().getFullYear().toString(16).toUpperCase()}</span>
+              </div>
+              <p className="text-center md:text-right">
+                © {new Date().getFullYear()} ARJUNKUMAR R. SECURE INTERFACE. ALL RIGHTS RESERVED.
+              </p>
+              <div className="flex gap-4">
+                <button onClick={() => handleNavClick("about")} className="hover:text-cyber-cyan transition-colors clickable">SYS_INFO</button>
+                <button onClick={() => handleNavClick("projects")} className="hover:text-cyber-pink transition-colors clickable">REPOS</button>
+                <button onClick={() => handleNavClick("contact")} className="hover:text-cyber-cyan transition-colors clickable">SMTP_LINK</button>
+              </div>
+            </div>
+          </footer>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      )}
+    </>
   );
+}
+
+// Quick helper inside file
+function handleNavClick(id: string) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: "smooth" });
 }
